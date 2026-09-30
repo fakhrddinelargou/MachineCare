@@ -15,6 +15,7 @@ async function seedAdmin() {
     const hashPassword = await hash(process.env.DEFAULT_ADMIN_PASSWORD, 10);
 
     await User.createUser({
+        full_name : "global_admin",
         email: process.env.DEFAULT_ADMIN_EMAIL,
         password: hashPassword
     });
