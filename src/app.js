@@ -1,14 +1,28 @@
+// LIBRARY
 const express = require('express');
 const app = express();
 
-app.use(express.json());
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/machines', require('./routes/machineRoutes'));
-app.use('/api/reports', require('./routes/reportRoutes'));
-app.use('/health', require('./routes/healthRoutes'));
+//ROUTES
+const testRoutes = require('./routes/testRoutes');
+// const healthRoutes = require('./routes/healthRoutes');
+// const authRoutes = require('./routes/authRoutes');
+// const userRoutes = require('./routes/userRoutes');
+// const machineRoutes = require('./routes/machineRoutes');
+// const reportRoutes = require('./routes/reportRoutes');
 
-app.use(require('./middlewares/notFound'));
-app.use(require('./middlewares/errorHandler'));
+// MIDDLEWARE
+const notFound = require('./middlewares/notFound')
+const errorMiddleware = require('./middlewares/errorMiddleware')
+
+// USAGE
+app.use(express.json());
+app.use('/api/test', testRoutes );
+// app.use('/api/auth', authRoutes);
+// app.use('/api/users', userRoutes);
+// app.use('/api/machines', machineRoutes);
+// app.use('/api/reports', reportRoutes);
+// app.use('/health', healthRoutes);
+app.use(notFound);
+app.use(errorMiddleware);
 
 module.exports = app;
