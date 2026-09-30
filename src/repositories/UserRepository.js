@@ -14,7 +14,7 @@ async function findUserByEmail (email){
 }
 // FIND USER BY ID
 async function findUserById (id){
- return  await User.findOne({id});
+ return await User.findById(id);
 }
 
 

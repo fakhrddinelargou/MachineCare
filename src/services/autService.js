@@ -23,7 +23,7 @@ async function login(email, password) {
 
     return {
         token: token,
-        user: { id: user.id, email: user.email }
+        user: { id: user.id, full_name : user.full_name , email: user.email  }
     }
 
 
