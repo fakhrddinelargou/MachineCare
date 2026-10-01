@@ -6,7 +6,7 @@ async function authMiddleware(req, res, next) {
 
     const authHeader = req.headers.authorization;
 
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ status: 'error', message: 'Token manquant' });
     }
@@ -15,17 +15,19 @@ async function authMiddleware(req, res, next) {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-                
+
         const user = await findUserById(decoded.id);
-        
+
         if (!user) {
             return res.status(401).json({ status: 'error', message: 'Utilisateur introuvable' });
         }
 
-        req.user = {id : user.id , email : user.email , full_name : user.full_name};
-        
+        req.user = { id: user.id, email: user.email, full_name: user.full_name };
+
         next();
     } catch (err) {
+        console.log(err);
+        
         if (err.name === 'TokenExpiredError') {
             return res.status(401).json({ status: 'error', message: 'Token expiré' });
         }

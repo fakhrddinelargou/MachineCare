@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 // CREATE USER
 async function createUser (data){    
- const result = await User.create(data);
+ return await User.create(data);
 }
 // FIND USERS
 async function findUser (){
