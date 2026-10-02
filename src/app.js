@@ -7,7 +7,7 @@ const testRoutes = require('./routes/testRoutes');
 // const healthRoutes = require('./routes/healthRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
-// const machineRoutes = require('./routes/machineRoutes');
+const machineRoutes = require('./routes/machineRoutes');
 // const reportRoutes = require('./routes/reportRoutes');
 
 // MIDDLEWARE
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use('/api/test', testRoutes );
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-// app.use('/api/machines', machineRoutes);
+app.use('/api/machines', machineRoutes);
 // app.use('/api/reports', reportRoutes);
 // app.use('/health', healthRoutes);
 app.use(notFound);
