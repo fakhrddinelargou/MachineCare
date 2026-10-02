@@ -2,6 +2,8 @@ function errorHandler(err, req, res, next) {
   let statusCode = err.statusCode || 500;
   let message = err.message || "Erreur serveur";
 
+  console.log(err);
+  
   // Duplicate key (référence/email déjà utilisé)
   if (err.code === 11000) {
     statusCode = 409;
