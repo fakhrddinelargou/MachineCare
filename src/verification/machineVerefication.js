@@ -23,4 +23,11 @@ const createMachineSchema = z.object({
         .optional(),
 });
 
-module.exports = { createMachineSchema };
+
+
+
+const objectIdSchema = z.string().refine(
+  (val) => /^[0-9a-fA-F]{24}$/.test(val),
+  { message: "Invalid ObjectId" }
+);
+module.exports = { createMachineSchema , objectIdSchema };

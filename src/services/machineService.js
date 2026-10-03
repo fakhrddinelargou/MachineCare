@@ -1,4 +1,4 @@
-const { createMachine, findMachineByReference } = require("../repositories/machineRepository");
+const { createMachine, getAllMachines, findMachineByReference  , getmachineById } = require("../repositories/machineRepository");
 const AppError = require('../utils/AppError');
 
 
@@ -8,6 +8,14 @@ async function handleMachineData(data) {
     return await createMachine(data);
 }
 
+async function getAll() {
+    return await getAllMachines()
+}
 
+async function getById(id){
+   
+    return await getmachineById(id);
 
-module.exports = {handleMachineData};
+}
+
+module.exports = { handleMachineData, getAll , getById };

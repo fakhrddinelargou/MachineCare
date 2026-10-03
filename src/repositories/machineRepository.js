@@ -10,7 +10,16 @@ async function findMachineByReference(ref) {
 }
 
 
+async function getAllMachines() {
+    // -1 => DESC
+    return await Machine.find().sort({createdAt : -1});
+}
 
 
-module.exports = {createMachine , findMachineByReference}
+async function getmachineById(id) {
+    return await Machine.findById(id)
+}
+
+
+module.exports = {createMachine , findMachineByReference ,getAllMachines , getmachineById }
 
