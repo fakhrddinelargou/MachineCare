@@ -23,11 +23,20 @@ const createMachineSchema = z.object({
         .optional(),
 });
 
-
-
-
 const objectIdSchema = z.string().refine(
   (val) => /^[0-9a-fA-F]{24}$/.test(val),
   { message: "Invalid ObjectId" }
 );
-module.exports = { createMachineSchema , objectIdSchema };
+
+
+const machineFilterSchema = z.object({
+  workshop: z.string().trim().min(1).optional(),
+  status: z.enum(['disponible', 'en maintenance', 'hors service'], {
+    errorMap: () => ({ message: 'Statut invalide' }),
+  }).optional(),
+  name: z.string().trim().min(1).optional(),
+});
+
+
+
+module.exports = { createMachineSchema , objectIdSchema ,machineFilterSchema};

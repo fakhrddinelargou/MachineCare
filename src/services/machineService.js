@@ -8,8 +8,8 @@ async function handleMachineData(data) {
     return await createMachine(data);
 }
 
-async function getAll() {
-    return await getAllMachines()
+async function getAll(filter) {
+    return await getAllMachines(filter)
 }
 
 async function getById(id){

@@ -10,9 +10,9 @@ async function findMachineByReference(ref) {
 }
 
 
-async function getAllMachines() {
+async function getAllMachines(filter) {
     // -1 => DESC
-    return await Machine.find().sort({createdAt : -1});
+    return await Machine.find(filter).sort({createdAt : -1});
 }
 
 
