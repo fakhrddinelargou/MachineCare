@@ -38,5 +38,14 @@ const machineFilterSchema = z.object({
 });
 
 
+const updateMachineSchema = z.object({
+  reference: z.string().trim().min(2, { message: 'La référence ne peut pas être vide' }).optional(),
+  name: z.string().trim().min(2, { message: 'Le nom doit contenir au moins 2 caractères' }).optional(),
+  workshop: z.string().trim().min(2, { message: "L'atelier doit contenir au moins 2 caractères" }).optional(),
+  status: z.enum(['disponible', 'en maintenance', 'hors service'], {
+    errorMap: () => ({ message: 'Statut invalide' }),
+  }).optional(),
+});
 
-module.exports = { createMachineSchema , objectIdSchema ,machineFilterSchema};
+
+module.exports = { createMachineSchema , objectIdSchema ,machineFilterSchema , updateMachineSchema};

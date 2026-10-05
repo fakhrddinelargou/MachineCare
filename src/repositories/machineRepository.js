@@ -20,6 +20,10 @@ async function getmachineById(id) {
     return await Machine.findById(id)
 }
 
+async function updateMachine(id , data){    
+    return await Machine.findByIdAndUpdate(id,data,{runValidators : true , returnDocument : 'after'})
+}
 
-module.exports = {createMachine , findMachineByReference ,getAllMachines , getmachineById }
+
+module.exports = {createMachine , findMachineByReference ,getAllMachines , getmachineById ,updateMachine }
 

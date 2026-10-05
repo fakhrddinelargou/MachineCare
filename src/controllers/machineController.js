@@ -1,7 +1,7 @@
 const AppError = require('../utils/AppError');
 const asyncHandler = require('../utils/asyncHandler');
-const { createMachineSchema, objectIdSchema , machineFilterSchema } = require('../verification/machineVerefication');
-const { handleMachineData, getAll, getById } = require('../services/machineService');
+const { createMachineSchema, objectIdSchema, machineFilterSchema , updateMachineSchema } = require('../verification/machineVerefication');
+const { handleMachineData, getAll, getById ,updateMachineById } = require('../services/machineService');
 
 
 const create = asyncHandler(async (req, res) => {
@@ -20,20 +20,19 @@ const create = asyncHandler(async (req, res) => {
 
 const get = asyncHandler(async (req, res) => {
     const query = req.query;
-    
+
     const cases = ['workshop', 'status', 'name'];
     const filter = {};
     const queryAsArr = Object.entries(query)
-    
+
     for (let i = 0; i < queryAsArr.length; i++) {
-       for (let a = 0; a < cases.length; a++) {
-           if (queryAsArr[i][0] === cases[a]) {
-               filter[cases[a]] = queryAsArr[i][1]
-            }        
-       }        
+        for (let a = 0; a < cases.length; a++) {
+            if (queryAsArr[i][0] === cases[a]) {
+                filter[cases[a]] = queryAsArr[i][1]
+            }
+        }
     }
 
-    console.log(filter);
 
 
     if (Object.keys(filter).length === 0) {
@@ -43,14 +42,14 @@ const get = asyncHandler(async (req, res) => {
 
     const result = machineFilterSchema.safeParse(filter)
 
-    if(!result.success){
-          throw new AppError(result.error.issues?.[0]?.message , 400);
+    if (!result.success) {
+        throw new AppError(result.error.issues?.[0]?.message, 400);
     }
 
     const data = await getAll(result.data);
 
-    
-        return res.json({ message: data })
+
+    return res.json({ message: data })
 })
 
 
@@ -70,5 +69,22 @@ const getByID = asyncHandler(async (req, res) => {
 })
 
 
+const update = asyncHandler(async (req,res)=>{
+    if(Object.keys(req.body).length === 0){
+        console.log(Object.keys(req.body).length);
+        
+        throw new AppError('No data' , 400)
+    }
+    const validateId = objectIdSchema.safeParse(req.params.id);
+    if(!validateId.success) throw new AppError(validateId.error.issues?.[0]?.message , 400)
+    
 
-module.exports = { create, get, getByID }
+    const validationData = updateMachineSchema.safeParse(req.body);
+    if(!validationData.success) throw new AppError(validationData.error.issues?.[0]?.message , 400)
+    
+    const upadateMachine = await updateMachineById(validateId.data , validationData.data)
+
+    return res.status(200).json({result : upadateMachine})
+    
+})
+module.exports = { create, get, getByID , update }
